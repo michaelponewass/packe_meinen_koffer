@@ -1,0 +1,52 @@
+{
+  "intents": [
+    {
+      "name": "AMAZON.YesIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.NoIntent",
+      "samples": []
+    },
+    {
+      "name": "AnswerIntent",
+      "samples": [
+        "{thing}"
+      ],
+      "slots": [
+        {
+          "name": "thing",
+          "type": "AMAZON.LITERAL",
+          "samples": ["ich füge {thing} hinzu"]
+        }
+      ]
+    },
+    {
+      "name": "PracticeIntent",
+      "samples": [
+        "practice"
+      ],
+      "slots": []
+    },
+    {
+      "name": "QuizIntent",
+      "samples": [
+        "quiz"
+      ],
+      "slots": []
+    },
+
+    {
+      "name": "AMAZON.CancelIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.HelpIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.StopIntent",
+      "samples": []
+    }
+  ]
+}

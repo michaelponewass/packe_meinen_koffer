@@ -1,0 +1,87 @@
+{
+  "intents": [
+    {
+      "name": "AMAZON.YesIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.NoIntent",
+      "samples": []
+    },
+    {
+      "name": "AnswerIntent",
+      "samples": [
+        "{thing}"
+      ],
+      "slots": [
+        {
+          "name": "thing",
+          "type": "LIST_OF_THINGS",
+          "samples": ["ich füge {thing} hinzu"]
+        }
+      ]
+    },
+    {
+      "name": "PracticeIntent",
+      "samples": [
+        "practice"
+      ],
+      "slots": []
+    },
+    {
+      "name": "QuizIntent",
+      "samples": [
+        "quiz"
+      ],
+      "slots": []
+    },
+
+    {
+      "name": "AMAZON.CancelIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.HelpIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.StopIntent",
+      "samples": []
+    }
+  ],
+  "types": [
+    {
+      "name": "LIST_OF_THINGS",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "Krawette",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Schuhe",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Hemd",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Hose",
+            "synonyms": []
+          }
+        }
+      ]
+    }
+  ]
+}
