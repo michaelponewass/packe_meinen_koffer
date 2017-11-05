@@ -17,14 +17,14 @@ const languageStrings = {
             'HELP_MESSAGE': "I will ask you a series of questions. You can say practice to have me read all %s of the questions, or take a quiz of just %s questions. "
         }
     },
-     'de-DE': {
-         'translation' : {
-             'TITLE'  : "Koffer",
-             'WELCOME_LAUNCH':"Willkommen ",
-             'WELCOME_PRACTICE': "Okay, Wir machen einen Test. Bist Du bereit ? Antworte mit Ja oder Nein.",
-             'WELCOME_QUIZ': "Okay, I will ask you %s questions! Answer by saying the name of a U.S. State. Ready to start the quiz?",
-             'HELP_MESSAGE': "I will ask you a series of questions. You can say practice to have me read all %s of the questions, or take a quiz of just %s questions. "
-         }
+    'de-DE': {
+        'translation' : {
+            'TITLE'  : "Koffer",
+            'WELCOME_LAUNCH':"Willkommen ",
+            'WELCOME_PRACTICE': "Okay, Wir machen einen Test. Bist Du bereit ? Antworte mit Ja oder Nein.",
+            'WELCOME_QUIZ': "Okay, I will ask you %s questions! Answer by saying the name of a U.S. State. Ready to start the quiz?",
+            'HELP_MESSAGE': "I will ask you a series of questions. You can say practice to have me read all %s of the questions, or take a quiz of just %s questions. "
+        }
     }
 };
 const thingList = ["Krawatte", "Schuhe", "Hemd", "Hose"];
@@ -101,6 +101,7 @@ const startSessionHandlers = Alexa.CreateStateHandler(states.START, {
     'NewSession': function() {
 
         this.attributes['thingList'] = thingList;
+        slotData(this.event.request, "thing");
         this.attributes['questionList'] = questionList;
         this.attributes['correctCount'] = 0;
         this.attributes['wrongCount'] = 0;
@@ -144,6 +145,7 @@ const practiceHandlers = Alexa.CreateStateHandler(states.PRACTICE, {
     },
     'AMAZON.YesIntent': function() {  // Yes, I want to start the practice
 
+        console.log("Practice started...");
         var say = '';
 
 
@@ -158,7 +160,7 @@ const practiceHandlers = Alexa.CreateStateHandler(states.PRACTICE, {
         } else {
             this.attributes['sessionQuestionList'] = randomizeArray(this.attributes['thingList']);
         }
-        say = 'Ich packe meinen Koffer und füge ' + this.attributes['sessionQuestionList'][0] + ' hinzu';
+        say = 'Ich packe meinen Koffer und füge ' + this.attributes['sessionQuestionList'][0] + ' hinzu. Was packst Du in den Koffer?';
 
         this.response.speak(say).listen(say);
         this.emit(':responseReady');
@@ -393,6 +395,9 @@ const scoreHandlers = {
             this.attributes['correctCount'] += 1;
 
             say =  thingsGuess + ' ist richtig! ';
+            var rightList = this.attributes['rightList'];
+            rightList.push(thingsGuess);
+            this.attributes['rightList'] = rightList;
 
         } else {
 
@@ -445,4 +450,27 @@ function pluralize(word, qty) {
         newWord = word + 's';
     }
     return qty.toString() + ' ' + newWord;
+}
+
+function isSlotValid(request, slotName){
+    var slot = request.intent.slots[slotName];
+    //console.log("request = "+JSON.stringify(request)); //uncomment if you want to see the request
+    var slotValue;
+
+    //if we have a slot, get the text and store it into speechOutput
+    if (slot && slot.value) {
+        //we have a value in the slot
+        slotValue = slot.value.toLowerCase();
+        return slotValue;
+    } else {
+        //we didn't get a value in the slot.
+        return false;
+    }
+}
+
+
+function slotData(request, slotName){
+    //var slot = request.intent.slots[slotName];
+    console.log("request = "+JSON.stringify(request)); //uncomment if you want to see the request
+    console.log("thing value = "+JSON.stringify(request.intent.slots.thing.value)); //uncomment if you want to see the request
 }
